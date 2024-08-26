@@ -72,3 +72,13 @@ Bli en mästare på MongoDB genom att göra så många av nedanstående övninga
 
 - http://nicholasjohnson.com/mongo/course/workbook/
 - https://www.mongodb.com/developer/products/mongodb/cheat-sheet/
+
+
+## My database: 
+https://cloud.mongodb.com/v2/66c71b9854b79f40d1d38b5b#/metrics/replicaSet/66c71dfe61a14120714c3b31/explorer/Lektion240822/books/find
+
+CheatSheet: https://www.mongodb.com/developer/products/mongodb/cheat-sheet/
+
+## Run:
+Cd server: npm run dev
+Cd client: npm run dev
