@@ -80,5 +80,6 @@ https://cloud.mongodb.com/v2/66c71b9854b79f40d1d38b5b#/metrics/replicaSet/66c71d
 CheatSheet: https://www.mongodb.com/developer/products/mongodb/cheat-sheet/
 
 ## Run:
+Talk to the database: mongosh   
 Cd server: npm run dev   
 Cd client: npm run dev
