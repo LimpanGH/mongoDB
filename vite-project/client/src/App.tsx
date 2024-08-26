@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
+interface Book {
+  _id: string;
+  Title: string;
+  Author: string;
+  Year: number;
+  Genre: string;
+  Pages: number;
+  ISBN: string;
+}
+
 const App = () => {
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState<Book[]>([]);
 
   useEffect(() => {
     fetchBooks();
@@ -17,7 +27,7 @@ const App = () => {
     }
   };
 
-  const deleteBook = async (bookId) => {
+  const deleteBook = async (bookId: string) => {
     try {
       const response = await fetch(`http://localhost:3000/books/${bookId}`, {
         method: 'DELETE',
@@ -32,16 +42,18 @@ const App = () => {
     }
   };
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const target = event.target as HTMLFormElement;
+
     const newBook = {
-      Title: event.target.title.value,
-      Author: event.target.author.value,
-      Year: parseInt(event.target.year.value, 10),
-      Genre: event.target.genre.value,
-      Pages: parseInt(event.target.pages.value, 10),
-      ISBN: event.target.isbn.value,
+      Title: (target.elements.namedItem('title') as HTMLInputElement).value,
+      Author: (target.elements.namedItem('author') as HTMLInputElement).value,
+      Year: (target.elements.namedItem('year') as HTMLInputElement).value,
+      Genre: (target.elements.namedItem('genre') as HTMLInputElement).value,
+      Pages: (target.elements.namedItem('pages') as HTMLInputElement).value,
+      ISBN: (target.elements.namedItem('isbn') as HTMLInputElement).value,
     };
 
     try {
@@ -54,7 +66,7 @@ const App = () => {
       });
 
       if (response.ok) {
-        event.target.reset();
+        target.reset();
         fetchBooks();
       } else {
         console.error('Error adding book:', await response.text());
@@ -66,6 +78,29 @@ const App = () => {
 
   return (
     <div>
+      <form onSubmit={handleFormSubmit}>
+        <label>
+          <input type='text' name='title' placeholder='Title' required />
+        </label>
+        <label>
+          <input type='text' name='author' placeholder='Author' required />
+        </label>
+        <label>
+          <input type='number' name='year' placeholder='Year' required />
+        </label>
+        <label>
+          <input type='text' name='genre' placeholder='Genre' required />
+        </label>
+        <label>
+          <input type='number' name='pages' placeholder='Pages' required />
+        </label>
+        <label>
+          <input type='text' name='isbn' placeholder='ISBN' required />
+        </label>
+        <label>
+          <button type='submit'>Add Book</button>
+        </label>
+      </form>
       <ul>
         {books.map((book) => (
           <li key={book._id}>
@@ -76,15 +111,6 @@ const App = () => {
           </li>
         ))}
       </ul>
-      <form onSubmit={handleFormSubmit}>
-        <input type='text' name='title' placeholder='Title' />
-        <input type='text' name='author' placeholder='Author' />
-        <input type='number' name='year' placeholder='Year' />
-        <input type='text' name='genre' placeholder='Genre' />
-        <input type='number' name='pages' placeholder='Pages' />
-        <input type='text' name='isbn' placeholder='ISBN' />
-        <button type='submit'>Add Book</button>
-      </form>
     </div>
   );
 };
